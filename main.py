@@ -8,6 +8,7 @@ def add_items_to_gsheet(auction_list):
     lowest_delivery_price_fields_list = []
     number_of_sold_items_fields_list = []
     category_id_fields_list = []
+    category_name_fields_list = []
 
     for auction in auction_list:
         url_fields_list.append(get_url_field(auction))
@@ -16,6 +17,7 @@ def add_items_to_gsheet(auction_list):
         lowest_delivery_price_fields_list.append(get_lowest_delivery_price_field(auction))
         number_of_sold_items_fields_list.append(get_number_of_sold_items(auction))
         category_id_fields_list.append(get_category_id(auction))
+        category_name_fields_list.append(get_category_name(auction))
 
 
     last_row = len(url_fields_list) + 1
@@ -24,7 +26,8 @@ def add_items_to_gsheet(auction_list):
     google_sheet.update_rows_in_batch(product_price_fields_list, 2, 3, last_row, 3)
     google_sheet.update_rows_in_batch(lowest_delivery_price_fields_list, 2, 4, last_row, 4)
     google_sheet.update_rows_in_batch(number_of_sold_items_fields_list, 2, 5, last_row, 5)
-    google_sheet.update_rows_in_batch(category_id_fields_list, 2, 6, last_row, 6)
+    google_sheet.update_rows_in_batch(category_name_fields_list, 2, 6, last_row, 6)
+    google_sheet.update_rows_in_batch(category_id_fields_list, 2, 7, last_row, 7)
 
 def get_number_of_sold_items(auction):
     return auction['number_of_sold_items']
@@ -40,6 +43,8 @@ def get_product_price_field(auction):
 def get_category_id(auction):
     return auction['category_id']
 
+def get_category_name(auction):
+    return auction['category_name']
 
 def get_image_url_field(auction):
     image_url = auction['image_url']
@@ -64,6 +69,6 @@ promoted_items_parsed_list = allegro.get_parsed_auction_list(promoted_items)
 regular_items_parsed_list = allegro.get_parsed_auction_list(regular_items)
 
 joined_list = promoted_items_parsed_list + regular_items_parsed_list
-google_sheet = GoogleSheet('towar z cn', '{}'.format(category_id), '300', '8')
+google_sheet = GoogleSheet('towar z cn', '{}'.format(category_id), '300', '9')
 add_items_to_gsheet(joined_list)
 print('Google worksheet created, named: {}'.format(category_id))

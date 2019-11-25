@@ -1,8 +1,9 @@
-from AllegroRestApi import AllegroRestApi
-import requests
 import itertools
-import json
 
+import requests
+import json
+from AllegroRestApi import AllegroRestApi
+from GetIdsOfAllegroCategories import GetIdsOfAllegroCategories
 
 class BestSellingItems():
     def merge_list(self, auction_list):
@@ -102,9 +103,16 @@ class BestSellingItems():
         category_id = category_field['id']
         return category_id
 
+    def get_category_name(self, category_id):
+        categories = GetIdsOfAllegroCategories()
+        category_field = categories.get_categories_by_id(category_id)
+        category_name = category_field['name']
+        return category_name
+
+
     def create_auction_fields_dict(self, auction_name, auction_url,
                                    image_url, product_price, lowest_delivery_price,
-                                   number_of_sold_items, category_id):
+                                   number_of_sold_items, category_id, category_name):
         auction_fields_dict = {}
         auction_fields_dict['auction_name'] = auction_name
         auction_fields_dict['auction_url'] = auction_url
@@ -113,6 +121,7 @@ class BestSellingItems():
         auction_fields_dict['lowest_delivery_price'] = lowest_delivery_price
         auction_fields_dict['number_of_sold_items'] = number_of_sold_items
         auction_fields_dict['category_id'] = category_id
+        auction_fields_dict['category_name'] = category_name
         return auction_fields_dict
 
     def get_parsed_auction_list(self, auction_list):
@@ -126,9 +135,10 @@ class BestSellingItems():
             lowest_delivery_price = self.get_lowest_delivery_price(auction)
             number_of_sold_items = self.get_number_of_sold_items(auction)
             category_id = self.get_category_id(auction)
+            category_name = self.get_category_name(category_id)
             auction_fields_dict = self.create_auction_fields_dict(auction_name, auction_url,
                                                                   image_url, product_price, lowest_delivery_price,
-                                                                  number_of_sold_items, category_id)
+                                                                  number_of_sold_items, category_id, category_name)
 
             parsed_auction_list.append(auction_fields_dict)
 

@@ -57,9 +57,10 @@ class GoogleSheet():
         self.worksheet.update_cell(1, 3, 'CENA')
         self.worksheet.update_cell(1, 4, 'WYSYŁKA')
         self.worksheet.update_cell(1, 5, 'ILOŚĆ SPRZEDANYCH NA DZIEŃ {}'.format(timestamp))
-        self.worksheet.update_cell(1, 6, 'KATEGORIA')
-        self.worksheet.update_cell(1, 7, 'SKU')
-        self.worksheet.update_cell(1, 8, 'AUKCJA PROMOWANA')
+        self.worksheet.update_cell(1, 6, 'NAZWA KATEGORII')
+        self.worksheet.update_cell(1, 7, 'ID KATEGORII')
+        self.worksheet.update_cell(1, 8, 'SKU')
+        self.worksheet.update_cell(1, 9, 'AUKCJA PROMOWANA')
 
     def update_rows_in_batch(self, row_value_list, first_row, first_column, last_row, last_column):
         cell_list = self.worksheet.range(first_row, first_column, last_row, last_column)
