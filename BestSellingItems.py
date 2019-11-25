@@ -104,8 +104,8 @@ class BestSellingItems():
         return category_id
 
     def get_category_name(self, category_id):
-        categories = GetIdsOfAllegroCategories()
-        category_field = categories.get_categories_by_id(category_id)
+        category_resolver = GetIdsOfAllegroCategories()
+        category_field = category_resolver.get_categories_by_id(category_id)
         category_name = category_field['name']
         return category_name
 

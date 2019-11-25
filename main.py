@@ -1,5 +1,6 @@
 from GoogleSheet import GoogleSheet
 from BestSellingItems import BestSellingItems
+from GetIdsOfAllegroCategories import GetIdsOfAllegroCategories
 
 def add_items_to_gsheet(auction_list):
     url_fields_list = []
@@ -58,9 +59,12 @@ def get_url_field(auction):
     auction_url_field = '=HYPERLINK(\"{}";"{}\")'.format(auction_url, auction_name)
     return auction_url_field
 
-category_id = input('Category id: ')
-
+category_resolver = GetIdsOfAllegroCategories()
 allegro = BestSellingItems()
+
+category_id = input('Category id: ')
+category_field = category_resolver.get_categories_by_id(category_id)
+category_name = category_field['name']
 
 promoted_items = allegro.get_promoted_items(category_id)
 regular_items = allegro.get_regular_items(category_id)
@@ -69,6 +73,7 @@ promoted_items_parsed_list = allegro.get_parsed_auction_list(promoted_items)
 regular_items_parsed_list = allegro.get_parsed_auction_list(regular_items)
 
 joined_list = promoted_items_parsed_list + regular_items_parsed_list
-google_sheet = GoogleSheet('towar z cn', '{}'.format(category_id), '300', '9')
+worksheet_name = '{}/{}'.format(category_name, category_id)
+google_sheet = GoogleSheet('towar z cn', worksheet_name, '300', '9')
 add_items_to_gsheet(joined_list)
 print('Google worksheet created, named: {}'.format(category_id))
