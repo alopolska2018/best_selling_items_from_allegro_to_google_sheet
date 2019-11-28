@@ -117,9 +117,9 @@ class BestSellingItems():
         auction_fields_dict['auction_name'] = auction_name
         auction_fields_dict['auction_url'] = auction_url
         auction_fields_dict['image_url'] = image_url
-        auction_fields_dict['product_price'] = product_price
-        auction_fields_dict['lowest_delivery_price'] = lowest_delivery_price
-        auction_fields_dict['number_of_sold_items'] = number_of_sold_items
+        auction_fields_dict['product_price'] = float(product_price)
+        auction_fields_dict['lowest_delivery_price'] = float(lowest_delivery_price)
+        auction_fields_dict['number_of_sold_items'] = float(number_of_sold_items)
         auction_fields_dict['category_id'] = category_id
         auction_fields_dict['category_name'] = category_name
         return auction_fields_dict
